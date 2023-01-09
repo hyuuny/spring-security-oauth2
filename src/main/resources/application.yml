@@ -1,0 +1,24 @@
+server:
+  port: 8081
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration: ## 클라이언트 설정
+          keycloak:
+            authorization-grant-type: authorization_code                          # OAuth 2.0 권한 부여 타입
+            client-id: hyuuny-client-app                                          # 서비스 공급자에 등록된 클라이언트 아이디
+            client-name: hyuuny-client-app                                        # 클라이언트 이름
+            client-secret: QfExo4Oyh1IFRSPsNhMrmdkxKI159Edr                       # 서비스 공급자에 등록된 클라이언트 비빌번호
+            redirect-uri: http://localhost:8081/login/oauth2/code/keycloak        # 인가서버에서 권한 코드 부여 후 클라이언트로 리다이렉트 하는 위치(keycloak(registration ID))
+            clientAuthenticationMethod: client_secret_basic                       # 클라이언트 자격증명 전송방식
+            scope: openid,profile,email                                           # 리소스에 접근 제한 범위
+        provider: ## 공급자 설정
+          keycloak:
+            authorization-uri: http://localhost:8080/realms/oauth2/protocol/openid-connect/auth     # OAuth 2.0 권한 코드 부여 엔드 포인트 (인가 서버마다 다름)
+            issuer-uri: http://localhost:8080/realms/oauth2                                         # 서비스 공급자 위치
+            jwk-set-uri: http://localhost:8080/realms/oauth2/protocol/openid-connect/certs          # OAuth 2.0 JwkSetUri 엔드 포인트
+            token-uri: http://localhost:8080/realms/oauth2/protocol/openid-connect/token            # OAuth 2.0 토큰 엔드 포인트
+            user-info-uri: http://localhost:8080/realms/oauth2/protocol/openid-connect/userinfo     # OAuth 2.0 UserInfo 엔드 포인트
+            user-name-attribute: preferred_username                                                 # OAuth 2.0 사용자명을 추출하는 클레임명
